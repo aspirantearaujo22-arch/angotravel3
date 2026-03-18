@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Flask==2.3.3
 Werkzeug==2.3.7
 Jinja2==3.1.2
@@ -5,4 +6,13 @@ itsdangerous==2.1.2
 click==8.1.7
 blinker==1.6.2
 MarkupSafe==2.1.3
+=======
+Flask==2.3.3
+Werkzeug==2.3.7
+Jinja2==3.1.2
+itsdangerous==2.1.2
+click==8.1.7
+blinker==1.6.2
+MarkupSafe==2.1.3
+>>>>>>> c530d1a38990d7a5a44df9f7995d2432b1909c76
 gunicorn
