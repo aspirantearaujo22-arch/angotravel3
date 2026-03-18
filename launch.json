@@ -1,0 +1,203 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "João Silva",
+      "email": "joao@email.com",
+      "senha": "123456"
+    },
+    {
+      "id": 2,
+      "nome": "Maria Santos",
+      "email": "maria@email.com",
+      "senha": "123456"
+    },
+    {
+      "id": 3,
+      "nome": "Araújo Aspirante",
+      "email": "aspirantearaujo22@gmail.com",
+      "senha": "(..)05xzii",
+      "telefone": "+244958520741",
+      "nif": "0000",
+      "data_cadastro": "2026-03-18 19:31:41"
+    }
+  ],
+  "viagens": [
+    {
+      "id": 1,
+      "origem": "Luanda",
+      "destino": "Benguela",
+      "data": "2024-12-15",
+      "horario_partida": "08:00",
+      "horario_chegada": "14:00",
+      "preco": 8500,
+      "empresa": "AngoTravel",
+      "provincia_destino": "Benguela",
+      "disponivel": true
+    },
+    {
+      "id": 2,
+      "origem": "Luanda",
+      "destino": "Huambo",
+      "data": "2024-12-15",
+      "horario_partida": "09:30",
+      "horario_chegada": "16:30",
+      "preco": 7200,
+      "empresa": "Macusso Express",
+      "provincia_destino": "Huambo",
+      "disponivel": true
+    },
+    {
+      "id": 3,
+      "origem": "Luanda",
+      "destino": "Lubango",
+      "data": "2024-12-16",
+      "horario_partida": "07:00",
+      "horario_chegada": "15:00",
+      "preco": 9500,
+      "empresa": "Huila Transport",
+      "provincia_destino": "Huíla",
+      "disponivel": true
+    }
+  ],
+  "reservas": [
+    {
+      "id": 1,
+      "usuario_id": 3,
+      "usuario_nome": "Araújo Aspirante",
+      "usuario_nif": "0000",
+      "usuario_telefone": "+244958520741",
+      "viagem_id": 1,
+      "origem": "Luanda",
+      "destino": "Benguela",
+      "data": "2024-12-15",
+      "horario_partida": "08:00",
+      "horario_chegada": "14:00",
+      "preco": 8500,
+      "empresa": "AngoTravel",
+      "data_reserva": "2026-03-18 19:32:08",
+      "status": "pendente_pagamento",
+      "fatura": {
+        "numero": "FAT-202603-0001",
+        "data_emissao": "2026-03-18 19:32:08",
+        "data_vencimento": "2026-03-18 23:59:59",
+        "valor": 8500,
+        "estado": "emitida",
+        "metodo_pagamento": "Transferência Bancária"
+      }
+    },
+    {
+      "id": 2,
+      "usuario_id": 3,
+      "usuario_nome": "Araújo Aspirante",
+      "usuario_nif": "0000",
+      "usuario_telefone": "+244958520741",
+      "viagem_id": 1,
+      "origem": "Luanda",
+      "destino": "Benguela",
+      "data": "2024-12-15",
+      "horario_partida": "08:00",
+      "horario_chegada": "14:00",
+      "preco": 8500,
+      "empresa": "AngoTravel",
+      "data_reserva": "2026-03-18 19:37:03",
+      "status": "pendente_pagamento",
+      "fatura": {
+        "numero": "FAT-202603-0002",
+        "data_emissao": "2026-03-18 19:37:03",
+        "data_vencimento": "2026-03-18 23:59:59",
+        "valor": 8500,
+        "estado": "emitida",
+        "metodo_pagamento": "Transferência Bancária"
+      }
+    },
+    {
+      "id": 3,
+      "usuario_id": 3,
+      "usuario_nome": "Araújo Aspirante",
+      "usuario_nif": "0000",
+      "usuario_telefone": "+244958520741",
+      "viagem_id": 1,
+      "origem": "Luanda",
+      "destino": "Benguela",
+      "data": "2024-12-15",
+      "horario_partida": "08:00",
+      "horario_chegada": "14:00",
+      "preco": 8500,
+      "empresa": "AngoTravel",
+      "data_reserva": "2026-03-18 19:39:52",
+      "status": "confirmada",
+      "fatura": {
+        "numero": "FAT-202603-0003",
+        "data_emissao": "2026-03-18 19:39:52",
+        "data_vencimento": "2026-03-18 23:59:59",
+        "valor": 8500,
+        "estado": "paga",
+        "metodo_pagamento": "Transferência Bancária",
+        "data_pagamento": "2026-03-18 19:41:01"
+      }
+    },
+    {
+      "id": 4,
+      "usuario_id": 3,
+      "usuario_nome": "Araújo Aspirante",
+      "usuario_nif": "0000",
+      "usuario_telefone": "+244958520741",
+      "viagem_id": 1,
+      "origem": "Luanda",
+      "destino": "Benguela",
+      "data": "2024-12-15",
+      "horario_partida": "08:00",
+      "horario_chegada": "14:00",
+      "preco": 8500,
+      "empresa": "AngoTravel",
+      "data_reserva": "2026-03-18 19:41:50",
+      "status": "pendente_pagamento",
+      "fatura": {
+        "numero": "FAT-202603-0004",
+        "data_emissao": "2026-03-18 19:41:50",
+        "data_vencimento": "2026-03-18 23:59:59",
+        "valor": 8500,
+        "estado": "emitida",
+        "metodo_pagamento": "Transferência Bancária"
+      }
+    }
+  ],
+  "configuracoes": {
+    "empresa": {
+      "nome": "AngolaTravel",
+      "nif": "5417283940",
+      "endereco": "Rua da Missão, 123 - Luanda, Angola",
+      "telefone": "+244 923 456 789",
+      "email": "contato@angolatravel.co.ao",
+      "website": "www.angolatravel.co.ao"
+    },
+    "banco": {
+      "iban": "AO06 0040 0000 1234 5678 9012 3",
+      "bic": "BICAAOLU",
+      "banco": "Banco Angolano de Investimentos (BAI)",
+      "titular": "AngolaTravel Lda",
+      "moeda": "Kz"
+    },
+    "contas_bancarias": [
+      {
+        "banco": "BAI",
+        "iban": "AO06 0040 0000 1234 5678 9012 3",
+        "bic": "BICAAOLU",
+        "titular": "AngolaTravel Lda"
+      },
+      {
+        "banco": "BFA",
+        "iban": "AO06 0045 0000 9876 5432 1098 7",
+        "bic": "BFAOAOLU",
+        "titular": "AngolaTravel Lda"
+      },
+      {
+        "banco": "BIC",
+        "iban": "AO06 0042 0000 4567 8901 2345 6",
+        "bic": "BICAOALU",
+        "titular": "AngolaTravel Lda"
+      }
+    ]
+  }
+}

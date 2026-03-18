@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Início - AngolaTravel{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Viaje por Angola com segurança e conforto</h1>
+    <p>Encontre as melhores opções de viagem para todas as províncias</p>
+    {% if not session.usuario_id %}
+        <a href="{{ url_for('cadastro') }}" class="btn btn-vermelho">Começar Agora</a>
+    {% else %}
+        <a href="{{ url_for('viagens') }}" class="btn btn-vermelho">Ver Viagens</a>
+    {% endif %}
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <h3>🚌 Viagens Interprovinciais</h3>
+        <p>Conexões entre todas as 18 províncias de Angola</p>
+    </div>
+    <div class="card">
+        <h3>💰 Preços Acessíveis</h3>
+        <p>As melhores tarifas do mercado angolano</p>
+    </div>
+    <div class="card">
+        <h3>🕐 Horários Flexíveis</h3>
+        <p>Múltiplos horários para escolher o melhor para você</p>
+    </div>
+    <div class="card">
+        <h3>🏆 Empresas Parceiras</h3>
+        <p>Trabalhamos com as melhores transportadoras do país</p>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 3rem;">
+    <h2 style="color: var(--vermelho);">Províncias Atendidas</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Luanda</span>
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Benguela</span>
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Huambo</span>
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Huíla</span>
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Cabinda</span>
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Malanje</span>
+        <span style="background: var(--preto); color: var(--amarelo); padding: 0.5rem 1rem; border-radius: 20px;">Zaire</span>
+    </div>
+</div>
+{% endblock %}

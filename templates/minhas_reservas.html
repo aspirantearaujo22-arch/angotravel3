@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Minhas Reservas - AngolaTravel{% endblock %}
+
+{% block content %}
+<h1 style="color: var(--vermelho); margin-bottom: 0.5rem;">Minhas Reservas</h1>
+<p style="color: var(--preto); margin-bottom: 2rem;">Olá, {{ usuario }}! Aqui estão suas reservas:</p>
+
+{% if reservas %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Destino</th>
+                    <th>Data</th>
+                    <th>Partida</th>
+                    <th>Chegada</th>
+                    <th>Empresa</th>
+                    <th>Preço</th>
+                    <th>Status</th>
+                    <th>Nº Fatura</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                <tr>
+                    <td><strong>{{ reserva.destino }}</strong></td>
+                    <td>{{ reserva.data }}</td>
+                    <td>{{ reserva.horario_partida }}</td>
+                    <td>{{ reserva.horario_chegada }}</td>
+                    <td>{{ reserva.empresa }}</td>
+                    <td style="color: var(--vermelho); font-weight: bold;">{{ reserva.preco }} Kz</td>
+                    <td>
+                        {% if reserva.status == 'confirmada' %}
+                            <span style="background-color: #4CAF50; color: white; padding: 0.3rem 0.6rem; border-radius: 4px;">Confirmada</span>
+                        {% elif reserva.status == 'pendente_pagamento' %}
+                            <span style="background-color: #ffc107; color: black; padding: 0.3rem 0.6rem; border-radius: 4px;">Pendente</span>
+                        {% else %}
+                            <span style="background-color: #f44336; color: white; padding: 0.3rem 0.6rem; border-radius: 4px;">Cancelada</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('ver_fatura', reserva_id=reserva.id) }}" target="_blank" style="color: var(--vermelho); text-decoration: none;">
+                            {{ reserva.fatura.numero }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('detalhes_reserva', reserva_id=reserva.id) }}" class="btn btn-vermelho" style="padding: 0.3rem 0.8rem; font-size: 0.9rem; text-decoration: none; margin-right: 0.3rem;">
+                            Detalhes
+                        </a>
+                        
+                        {% if reserva.status == 'pendente_pagamento' %}
+                            <a href="{{ url_for('ver_fatura', reserva_id=reserva.id) }}" target="_blank" class="btn btn-amarelo" style="padding: 0.3rem 0.8rem; font-size: 0.9rem; text-decoration: none; margin-right: 0.3rem;">
+                                Pagar
+                            </a>
+                        {% endif %}
+                        
+                        {% if reserva.status == 'confirmada' or reserva.status == 'pendente_pagamento' %}
+                            <form action="{{ url_for('cancelar_reserva', reserva_id=reserva.id) }}" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-vermelho" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;" onclick="return confirm('Tem certeza que deseja cancelar esta reserva?')">
+                                    Cancelar
+                                </button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="margin-top: 2rem; text-align: center;">
+        <h3 style="color: var(--vermelho);">Total de reservas: {{ reservas|length }}</h3>
+        <p style="margin-top: 0.5rem;">
+            <strong>Valor total:</strong> 
+            <span style="color: var(--vermelho); font-size: 1.2rem;">
+                {% set total = namespace(value=0) %}
+                {% for reserva in reservas %}
+                    {% if reserva.status == 'confirmada' %}
+                        {% set total.value = total.value + reserva.preco %}
+                    {% endif %}
+                {% endfor %}
+                {{ total.value }} Kz
+            </span>
+        </p>
+    </div>
+{% else %}
+    <div class="card" style="text-align: center; padding: 3rem;">
+        <h3 style="color: var(--vermelho); margin-bottom: 1rem;">Você ainda não tem reservas</h3>
+        <p style="margin-bottom: 2rem;">Que tal escolher uma viagem agora mesmo?</p>
+        <a href="{{ url_for('viagens') }}" class="btn btn-vermelho">Ver Viagens Disponíveis</a>
+    </div>
+{% endif %}
+
+<div style="margin-top: 2rem; text-align: center;">
+    <a href="{{ url_for('viagens') }}" class="btn btn-amarelo">← Voltar para Viagens</a>
+</div>
+{% endblock %}

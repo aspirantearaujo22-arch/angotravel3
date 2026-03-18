@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Agenda de Viagens Angola{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span>🇦🇴</span> Angola<span>Travel</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('index') }}">Início</a>
+            {% if session.usuario_id %}
+                <a href="{{ url_for('viagens') }}">Viagens</a>
+                <a href="{{ url_for('minhas_reservas') }}">Minhas Reservas</a>
+                <a href="{{ url_for('logout') }}">Sair ({{ session.usuario_nome }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('cadastro') }}">Cadastro</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AngolaTravel - Conectando Angola</p>
+    </footer>
+</body>
+</html>

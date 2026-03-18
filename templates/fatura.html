@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Fatura {{ reserva.fatura.numero }} - AngolaTravel{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <div style="text-align: right; margin-bottom: 1rem;">
+        <button onclick="window.print()" class="btn btn-vermelho">🖨️ Imprimir Fatura</button>
+    </div>
+    
+    <div class="card" style="padding: 2rem;">
+        <!-- Cabeçalho -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--amarelo); padding-bottom: 1rem; margin-bottom: 2rem;">
+            <div class="logo" style="font-size: 1.8rem;">
+                <span>🇦🇴</span> Angola<span style="color: var(--vermelho);">Travel</span>
+            </div>
+            <div style="color: var(--vermelho); font-weight: bold; font-size: 1.2rem;">
+                FATURA ONLINE
+            </div>
+        </div>
+        
+        <!-- Número e datas -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+            <div>
+                <p><strong>Nº Fatura:</strong> {{ reserva.fatura.numero }}</p>
+                <p><strong>Data Emissão:</strong> {{ reserva.fatura.data_emissao }}</p>
+                <p><strong>Data Vencimento:</strong> {{ reserva.fatura.data_vencimento }}</p>
+            </div>
+            <div>
+                <p><strong>Status:</strong></p>
+                {% if reserva.fatura.estado == 'paga' %}
+                    <span style="background-color: #4CAF50; color: white; padding: 0.3rem 1rem; border-radius: 4px;">✅ PAGA</span>
+                {% else %}
+                    <span style="background-color: #ffc107; color: black; padding: 0.3rem 1rem; border-radius: 4px;">⏳ PENDENTE</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Dados da Empresa -->
+        <div style="background-color: var(--cinza-claro); padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--vermelho); margin-bottom: 0.5rem;">DADOS DA EMPRESA</h3>
+            <p>
+                <strong>{{ config.empresa.nome }}</strong><br>
+                NIF: {{ config.empresa.nif }}<br>
+                Endereço: {{ config.empresa.endereco }}<br>
+                Telefone: {{ config.empresa.telefone }}<br>
+                Email: {{ config.empresa.email }}
+            </p>
+        </div>
+        
+        <!-- Dados do Cliente -->
+        <div style="background-color: var(--cinza-claro); padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--vermelho); margin-bottom: 0.5rem;">DADOS DO CLIENTE</h3>
+            <p>
+                <strong>{{ reserva.usuario_nome }}</strong><br>
+                NIF: {{ reserva.usuario_nif }}<br>
+                Telefone: {{ reserva.usuario_telefone }}
+            </p>
+        </div>
+        
+        <!-- Detalhes da Viagem -->
+        <h3 style="color: var(--vermelho); margin-bottom: 1rem;">DETALHES DA VIAGEM</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Empresa</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ reserva.origem }} → {{ reserva.destino }}</td>
+                        <td>{{ reserva.data }}</td>
+                        <td>{{ reserva.horario_partida }} - {{ reserva.horario_chegada }}</td>
+                        <td>{{ reserva.empresa }}</td>
+                        <td style="color: var(--vermelho); font-weight: bold;">{{ reserva.preco }} Kz</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Total -->
+        <div style="text-align: right; margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--amarelo);">
+            <p style="font-size: 1.3rem;">
+                <strong>TOTAL A PAGAR:</strong> 
+                <span style="color: var(--vermelho);">{{ reserva.preco }} Kz</span>
+            </p>
+        </div>
+        
+        <!-- Dados Bancários -->
+        <div style="background-color: var(--preto); color: var(--amarelo); padding: 1.5rem; border-radius: 4px; margin-top: 2rem;">
+            <h3 style="color: var(--amarelo); margin-bottom: 1rem;">DADOS PARA PAGAMENTO</h3>
+            
+            {% if config and config.contas_bancarias %}
+                {% for conta in config.contas_bancarias %}
+                <div style="margin-bottom: 1rem; {% if not loop.last %}border-bottom: 1px solid var(--amarelo); padding-bottom: 1rem;{% endif %}">
+                    <p><strong>🏦 {{ conta.banco }}</strong></p>
+                    <p>IBAN: <span style="font-family: monospace; background-color: rgba(255,215,0,0.2); padding: 0.2rem 0.5rem; border-radius: 4px;">{{ conta.iban }}</span></p>
+                    <p>BIC: {{ conta.bic }}</p>
+                    <p>Titular: {{ conta.titular }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <p><strong>🏦 BAI - Banco Angolano de Investimentos</strong></p>
+                    <p>IBAN: AO06 0040 0000 1234 5678 9012 3</p>
+                    <p>BIC: BICAAOLU</p>
+                    <p>Titular: AngolaTravel Lda</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Rodapé -->
+        <div style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: #666;">
+            <p>Esta fatura é um documento oficial da AngolaTravel.<br>
+            Obrigado por viajar connosco!</p>
+            <p>© 2024 AngolaTravel - Todos os direitos reservados</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="{{ url_for('detalhes_reserva', reserva_id=reserva.id) }}" class="btn btn-vermelho">← Voltar para Detalhes</a>
+        <a href="{{ url_for('minhas_reservas') }}" class="btn btn-amarelo">Minhas Reservas</a>
+    </div>
+</div>
+
+<style>
+@media print {
+    header, footer, .btn, a {
+        display: none !important;
+    }
+    body {
+        background-color: white;
+    }
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+</style>
+{% endblock %}

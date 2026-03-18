@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Viagens Disponíveis - AngolaTravel{% endblock %}
+
+{% block content %}
+<h1 style="color: var(--vermelho); margin-bottom: 0.5rem;">Olá, {{ usuario }}!</h1>
+<p style="color: var(--preto); margin-bottom: 2rem;">Selecione uma viagem para fazer sua reserva:</p>
+
+<div class="filtros">
+    <h3 style="color: var(--vermelho); margin-bottom: 1rem;">Filtrar por Província</h3>
+    <select id="filtro-provincia" onchange="filtrarPorProvincia()">
+        <option value="todas">Todas as Províncias</option>
+        <option value="Benguela">Benguela</option>
+        <option value="Huambo">Huambo</option>
+        <option value="Huíla">Huíla</option>
+        <option value="Cabinda">Cabinda</option>
+        <option value="Malanje">Malanje</option>
+        <option value="Zaire">Zaire</option>
+    </select>
+</div>
+
+<div class="table-container">
+    <table id="tabela-viagens">
+        <thead>
+            <tr>
+                <th>Destino</th>
+                <th>Origem</th>
+                <th>Data</th>
+                <th>Partida</th>
+                <th>Chegada</th>
+                <th>Preço (Kz)</th>
+                <th>Empresa</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for viagem in viagens %}
+            <tr data-provincia="{{ viagem.provincia_destino }}">
+                <td><strong>{{ viagem.destino }}</strong></td>
+                <td>{{ viagem.origem }}</td>
+                <td>{{ viagem.data }}</td>
+                <td>{{ viagem.horario_partida }}</td>
+                <td>{{ viagem.horario_chegada }}</td>
+                <td style="color: var(--vermelho); font-weight: bold;">{{ viagem.preco }} Kz</td>
+                <td>{{ viagem.empresa }}</td>
+                <td>
+                    <form action="{{ url_for('selecionar_viagem', viagem_id=viagem.id) }}" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-vermelho" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;">
+                            Selecionar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function filtrarPorProvincia() {
+    const filtro = document.getElementById('filtro-provincia').value;
+    const linhas = document.querySelectorAll('#tabela-viagens tbody tr');
+    
+    linhas.forEach(linha => {
+        const provincia = linha.getAttribute('data-provincia');
+        if (filtro === 'todas' || provincia === filtro) {
+            linha.style.display = '';
+        } else {
+            linha.style.display = 'none';
+        }
+    });
+}
+</script>
+
+<div style="margin-top: 2rem; text-align: center;">
+    <h3 style="color: var(--vermelho);">Total de {{ viagens|length }} viagens disponíveis</h3>
+    <a href="{{ url_for('minhas_reservas') }}" class="btn btn-amarelo" style="margin-top: 1rem;">
+        Ver Minhas Reservas
+    </a>
+</div>
+{% endblock %}

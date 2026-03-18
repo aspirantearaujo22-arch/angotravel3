@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes da Reserva - AngolaTravel{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <h1 style="color: var(--vermelho); margin-bottom: 1rem;">Detalhes da Reserva</h1>
+    
+    <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="color: var(--vermelho); border-bottom: 2px solid var(--amarelo); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+            Informações da Viagem
+        </h3>
+        
+        <table style="width: 100%;">
+            <tr>
+                <td style="padding: 0.5rem; font-weight: bold;">Origem:</td>
+                <td style="padding: 0.5rem;">{{ reserva.origem }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.5rem; font-weight: bold;">Destino:</td>
+                <td style="padding: 0.5rem;">{{ reserva.destino }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.5rem; font-weight: bold;">Data:</td>
+                <td style="padding: 0.5rem;">{{ reserva.data }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.5rem; font-weight: bold;">Horário:</td>
+                <td style="padding: 0.5rem;">{{ reserva.horario_partida }} - {{ reserva.horario_chegada }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.5rem; font-weight: bold;">Empresa:</td>
+                <td style="padding: 0.5rem;">{{ reserva.empresa }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 0.5rem; font-weight: bold;">Valor:</td>
+                <td style="padding: 0.5rem; color: var(--vermelho); font-weight: bold; font-size: 1.2rem;">
+                    {{ reserva.preco }} Kz
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="card" style="margin-bottom: 2rem; background-color: #fff3cd; border-left: 4px solid #ffc107;">
+        <h3 style="color: var(--preto); border-bottom: 2px solid var(--amarelo); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+            ⚠️ Pagamento Pendente
+        </h3>
+        
+        <p style="margin-bottom: 1rem;">Sua reserva foi criada, mas ainda não foi paga. Para confirmar, faça a transferência para uma das contas abaixo:</p>
+        
+        <h4 style="color: var(--vermelho); margin-top: 1.5rem;">Dados Bancários:</h4>
+        
+        {% if config and config.contas_bancarias %}
+            {% for conta in config.contas_bancarias %}
+            <div style="background-color: var(--branco); padding: 1rem; border-radius: 4px; margin-bottom: 1rem; border: 1px solid var(--amarelo);">
+                <p><strong>🏦 Banco:</strong> {{ conta.banco }}</p>
+                <p><strong>IBAN:</strong> <span style="background-color: var(--amarelo); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace;">{{ conta.iban }}</span></p>
+                <p><strong>BIC/SWIFT:</strong> {{ conta.bic }}</p>
+                <p><strong>Titular:</strong> {{ conta.titular }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="background-color: var(--branco); padding: 1rem; border-radius: 4px; margin-bottom: 1rem; border: 1px solid var(--amarelo);">
+                <p><strong>🏦 Banco:</strong> BAI</p>
+                <p><strong>IBAN:</strong> <span style="background-color: var(--amarelo); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace;">AO06 0040 0000 1234 5678 9012 3</span></p>
+                <p><strong>BIC/SWIFT:</strong> BICAAOLU</p>
+                <p><strong>Titular:</strong> AngolaTravel Lda</p>
+            </div>
+        {% endif %}
+        
+        <div style="background-color: var(--preto); color: var(--amarelo); padding: 1rem; border-radius: 4px; margin: 1rem 0;">
+            <p style="margin-bottom: 0.5rem;"><strong>💳 Número da Fatura:</strong> {{ reserva.fatura.numero }}</p>
+            <p><strong>💰 Valor a pagar:</strong> {{ reserva.preco }} Kz</p>
+        </div>
+        
+        <p style="margin: 1rem 0; font-size: 0.9rem;">
+            Após realizar o pagamento, clique no botão abaixo para confirmar.
+        </p>
+        
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <form action="{{ url_for('confirmar_pagamento', reserva_id=reserva.id) }}" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-vermelho" onclick="return confirm('Confirma que realizou o pagamento?')">
+                    ✅ Já fiz o pagamento
+                </button>
+            </form>
+            
+            <a href="{{ url_for('ver_fatura', reserva_id=reserva.id) }}" class="btn btn-amarelo" target="_blank">
+                📄 Ver Fatura Online
+            </a>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="{{ url_for('minhas_reservas') }}" class="btn btn-vermelho">← Voltar para Minhas Reservas</a>
+    </div>
+</div>
+{% endblock %}
